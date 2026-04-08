@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exploreo - Blog Details</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMDJdZ0UuP+t6wJvBwFf1A0uXpGIfG5vYlqXmS4zXWd8+oK5tU+T1g+N7g+Gg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <style>
+      /* Color Palette from user image */
+      :root {
+        --color-deep-navy: #021024;
+        --color-dark-blue: #052659; /* Primary Color */
+        --color-medium-blue: #5483b3;
+        --color-light-slate: #7da0ca;
+        --color-sky-blue: #c1e8ff; /* Light Accent */
+        --color-background-blue: #e0f0f8; /* A shade of light blue to match the image background */
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        scroll-behavior: smooth;
+        padding-top: 0;
+        background-color: var(--color-background-blue);
+      }
+
+      /* Custom utility classes based on the new palette */
+      .bg-primary-custom {
+        background-color: var(--color-dark-blue) !important;
+      }
+
+      .btn-primary-custom {
+        background-color: var(--color-dark-blue);
+        border-color: var(--color-dark-blue);
+        color: white;
+        transition: all 0.3s;
+      }
+
+      .btn-primary-custom:hover {
+        background-color: var(--color-medium-blue);
+        border-color: var(--color-medium-blue);
+      }
+
+      .text-primary-custom {
+        color: var(--color-dark-blue) !important;
+      }
+
+      /* --- START GLOBAL NAVBAR STYLES (Copy to all pages) --- */
+      .navbar {
+        transition: background-color 0.3s ease;
+      }
+      .navbar-transparent {
+        background-color: transparent !important;
+        box-shadow: none !important;
+      }
+      .navbar-transparent .nav-link {
+        color: rgba(255, 255, 255, 0.8) !important;
+      }
+      .navbar-transparent .nav-link:hover {
+        color: var(--color-sky-blue) !important;
+      }
+      .navbar-transparent .nav-link.active {
+        color: var(--color-sky-blue) !important;
+        border-bottom: 2px solid var(--color-sky-blue);
+      }
+      .navbar-scrolled {
+        background-color: var(--color-dark-blue) !important;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+      }
+      .navbar-brand img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .navbar-brand img {
+        height: 90px;
+        width: auto;
+      }
+
+      @media (max-width: 768px) {
+        .navbar-brand img {
+          height: 50px;
+        }
+      }
+      /* --- END GLOBAL NAVBAR STYLES (Copy to all pages) --- */
+
+      /* --- START GLOBAL HERO BANNER STYLES (Copy to all pages) --- */
+      #page-hero {
+        position: relative;
+        height: 55vh;
+        min-height: 300px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+        margin-bottom: 50px;
+      }
+
+      #page-hero img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -2;
+      }
+
+      #page-hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(2, 16, 36, 0.5);
+        z-index: -1;
+      }
+
+      .hero-banner-title {
+        font-size: 4.5rem;
+        font-weight: 700;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        z-index: 1;
+      }
+
+      /* Banner Responsiveness */
+      @media (max-width: 768px) {
+        #page-hero {
+          height: 40vh;
+        }
+        .hero-banner-title {
+          font-size: 2.5rem;
+          letter-spacing: 3px;
+        }
+      }
+      /* --- END GLOBAL HERO BANNER STYLES (Copy to all pages) --- */
+
+      /* --- START BLOG DETAILS PAGE SPECIFIC STYLES --- */
+      .blog-post-container {
+        background-color: white;
+        padding: 40px; /* Keep original padding for text */
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .blog-content img {
+        /* Existing styles */
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin: 20px 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+        /* NEW: Styles to make images wider than their parent text container */
+        width: calc(
+          100% + 80px
+        ); /* Extend beyond 100% by double the container padding */
+        margin-left: -40px; /* Pull left by the container padding */
+        margin-right: -40px; /* Pull right by the container padding */
+        display: block; /* Ensure block-level behavior for margin application */
+        object-fit: cover; /* Ensures image covers its expanded area */
+
+        /* Ensure responsiveness on smaller screens */
+        @media (max-width: 768px) {
+          width: 100%; /* On smaller screens, keep images within the padding */
+          margin-left: 0; /* Remove negative margin on small screens */
+          margin-right: 0;
+        }
+      }
+
+      .blog-post-header h1 {
+        color: var(--color-deep-navy);
+        font-weight: 700;
+        margin-bottom: 15px;
+        font-size: 2.5rem;
+      }
+
+      .blog-meta-info {
+        font-size: 0.9rem;
+        color: #6c757d;
+        margin-bottom: 30px;
+      }
+      .blog-meta-info span {
+        margin-right: 15px;
+      }
+      .blog-meta-info i {
+        margin-right: 5px;
+      }
+
+      .blog-content p {
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+        color: #333;
+      }
+
+      .blog-content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin: 20px 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .blog-content h2,
+      .blog-content h3 {
+        color: var(--color-dark-blue);
+        font-weight: 600;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      /* Comments UI Placeholder */
+      .comments-section {
+        padding-top: 30px;
+        border-top: 1px solid #ddd;
+      }
+      .comment-box {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        border-left: 3px solid var(--color-light-slate);
+      }
+      .comment-author {
+        font-weight: 600;
+        color: var(--color-deep-navy);
+      }
+      .comment-date {
+        font-size: 0.8rem;
+        color: #999;
+      }
+
+      /* --- END BLOG DETAILS PAGE SPECIFIC STYLES --- */
+
+      /* --- START GLOBAL FOOTER STYLES (Copy to all pages) --- */
+      .footer-bg {
+        background-color: var(--color-deep-navy) !important;
+      }
+      footer a {
+        color: var(--color-light-slate);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      footer a:hover {
+        color: var(--color-sky-blue);
+      }
+
+      /* AUTH UI STYLES */
+      .profile-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(
+          --color-light-slate
+        ); /* Light circle background */
+        color: var(--color-deep-navy); /* Dark text color */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        border: 2px solid white;
+      }
+      .profile-avatar:hover {
+        background-color: var(--color-sky-blue);
+      }
+      /* --- END GLOBAL FOOTER STYLES (Copy to all pages) --- */
+    </style>
+  </head>
+  <body>
+    <nav
+      class="navbar navbar-expand-lg fixed-top navbar-dark navbar-transparent"
+      id="mainNav"
+    >
+      <div class="container">
+        <a class="navbar-brand" href="index.html"
+          ><img src="assets/logo.png" alt="Exploreo Logo"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="destinations.html">Destinations</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="packages.html">Packages</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="blog.html">Blog</a>
+            </li>
+          </ul>
+          <!-- NOTE: Ensure 'Book Now' button is included here if needed, or moved elsewhere -->
+          <a
+            href="packages.html"
+            class="btn btn-light ms-lg-3 d-none d-lg-block"
+            >Book Now</a
+          >
+
+          <!-- START AUTH/PROFILE UI -->
+          <div class="d-flex align-items-center ms-lg-3 gap-2">
+            <!-- 1. SIGN IN / SIGN UP BUTTON (Default: Visible) -->
+            <div id="authButtons" style="display: block">
+              <a href="login-signup.php" class="btn btn-light">Sign In / Up</a>
+            </div>
+
+            <!-- 2. PROFILE AVATAR (Default: Hidden. JS controls visibility) -->
+            <div
+              id="userProfile"
+              class="profile-avatar"
+              title="View Profile / Logout"
+              onclick="handleLogout()"
+              style="display: none"
+            >
+              <span id="userInitial">U</span>
+            </div>
+          </div>
+          <!-- END AUTH/PROFILE UI -->
+        </div>
+      </div>
+    </nav>
+
+    <header id="page-hero">
+      <img
+        src="https://picsum.photos/seed/blog-details-hero/1920/800"
+        alt="Default blog hero image"
+        id="blogHeroImage"
+      />
+      <h1 class="hero-banner-title" id="blogHeroTitle">LOADING BLOG POST...</h1>
+    </header>
+    <main class="py-5">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="blog-post-container">
+              <div class="blog-post-header">
+                <h1 id="blogPostTitle"></h1>
+                <div class="blog-meta-info">
+                  <span
+                    id="blogPostCategoryBadge"
+                    class="badge bg-primary-custom me-2"
+                  ></span>
+                  <span id="blogPostDate"
+                    ><i class="fas fa-calendar-alt"></i> Loading Date...</span
+                  >
+                  <span id="blogPostAuthor"
+                    ><i class="fas fa-user"></i> Loading Author...</span
+                  >
+                </div>
+              </div>
+              <div class="blog-content" id="blogPostContent">
+                <p class="text-center text-muted">Loading article content...</p>
+              </div>
+
+              <div class="comments-section mt-5">
+                <h3 class="text-deep-navy fw-bold mb-4">Leave a Comment</h3>
+
+                <form id="commentForm" class="row g-3 mb-5">
+                  <div class="col-md-6">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Your Name"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <input
+                      type="email"
+                      class="form-control"
+                      placeholder="Your Email"
+                      required
+                    />
+                  </div>
+                  <div class="col-12">
+                    <textarea
+                      class="form-control"
+                      rows="4"
+                      placeholder="Your Comment..."
+                      required
+                    ></textarea>
+                  </div>
+                  <div class="col-12">
+                    <button type="submit" class="btn btn-primary-custom">
+                      Post Comment
+                    </button>
+                  </div>
+                </form>
+
+                <h3 class="text-deep-navy fw-bold mb-3" id="commentsCount">
+                  2 Comments
+                </h3>
+                <div id="commentList">
+                  <div class="comment-box">
+                    <p class="mb-0 comment-author">
+                      Traveler Jen
+                      <span class="comment-date">| Nov 1, 2025</span>
+                    </p>
+                    <p class="small mt-1 mb-0">
+                      This was so helpful! I’m planning my trip now and this
+                      itinerary is perfect.
+                    </p>
+                  </div>
+                  <div class="comment-box">
+                    <p class="mb-0 comment-author">
+                      Local Expert
+                      <span class="comment-date">| Oct 28, 2025</span>
+                    </p>
+                    <p class="small mt-1 mb-0">
+                      Great tips, especially the note about pre-booking museum
+                      tickets!
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="text-white pt-5 pb-4 mt-5 footer-bg">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-4 col-md-6">
+            <h5 class="text-white mb-3 fw-bold footer-heading">
+              <i class="fas fa-globe me-2"></i>Exploreo
+            </h5>
+            <p class="small text-white-50">
+              Explore the world with tailored itineraries and exceptional
+              service. Your journey begins here.
+            </p>
+            <p class="mb-1 small">
+              <i class="fas fa-map-marker-alt me-2 text-white-50"></i>123 Travel
+              Road, Explorer City, Earth
+            </p>
+            <p class="mb-1 small">
+              <i class="fas fa-envelope me-2 text-white-50"></i
+              >info@exploreo.com
+            </p>
+          </div>
+
+          <div class="col-lg-3 col-md-6">
+            <h5 class="text-white mb-3 fw-bold footer-heading">Quick Links</h5>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a href="index.html" class="text-white-50">Home</a>
+              </li>
+              <li class="mb-2">
+                <a href="packages.html" class="text-white-50">Packages</a>
+              </li>
+              <li class="mb-2">
+                <a href="destinations.html" class="text-white-50"
+                  >Destinations</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="about.html" class="text-white-50">About Us</a>
+              </li>
+              <li class="mb-2">
+                <a href="blog.html" class="text-white-50">Blog</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg-5 col-md-12">
+            <h5 class="text-white mb-3 fw-bold footer-heading">
+              Stay Connected
+            </h5>
+            <p class="small text-white-50">Subscribe for exclusive deals.</p>
+            <form class="input-group mb-3">
+              <input
+                type="email"
+                class="form-control"
+                placeholder="Your Email"
+                aria-label="Your Email"
+              />
+              <button class="btn btn-light" type="submit">Subscribe</button>
+            </form>
+
+            <div class="mt-4">
+              <a href="#" class="text-white me-3"
+                ><i class="fab fa-facebook-f fa-lg"></i
+              ></a>
+              <a href="#" class="text-white me-3"
+                ><i class="fab fa-twitter fa-lg"></i
+              ></a>
+              <a href="#" class="text-white me-3"
+                ><i class="fab fa-instagram fa-lg"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+
+        <hr class="mt-4 mb-3 text-white-50" />
+        <div class="text-center small text-white-50">
+          © 2025 Exploreo All Rights Reserved.
+        </div>
+      </div>
+    </footer>
+
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      // Placeholder function to simulate user data retrieval from storage
+      function getLoggedInUser() {
+        // Reads a mock user name from localStorage set by loading.php
+        return localStorage.getItem("userName");
+      }
+
+      function updateAuthStatusUI() {
+        const userName = getLoggedInUser();
+        const $authButtons = $("#authButtons");
+        const $userProfile = $("#userProfile");
+        const $userInitial = $("#userInitial");
+
+        if (userName) {
+          // User is logged in: SHOW Avatar, HIDE Buttons
+          $authButtons.css("display", "none");
+          $userProfile.css("display", "flex");
+          $userInitial.text(userName.charAt(0).toUpperCase());
+        } else {
+          // User is NOT logged in: HIDE Avatar, SHOW Buttons
+          $userProfile.css("display", "none");
+          $authButtons.css("display", "block");
+        }
+      }
+
+      function handleLogout() {
+        // Clears the logged-in state, alerts user, and reloads the page
+        localStorage.removeItem("userName");
+        alert("You have been logged out. Redirecting to home.");
+        window.location.reload();
+      }
+
+      // Expose handleLogout globally for the HTML onclick attribute
+      window.handleLogout = handleLogout;
+
+      // -----------------------------------------------------
+      // IMPORTANT: You MUST call updateAuthStatusUI() inside your main ready function
+      $(document).ready(function () {
+        // Call this immediately to set the UI state correctly
+        updateAuthStatusUI();
+
+        // ... (rest of your existing code and other $(document).ready blocks)
+      });
+      // --- MOCK BLOG DATA ---
+      const blogPosts = [
+        {
+          id: "1",
+          title: "The Ultimate 48-Hour Guide to Paris",
+          category: "City Breaks",
+          categoryBadgeClass: "bg-primary-custom",
+          date: "May 1, 2025",
+          author: "Jane Doe",
+          heroImage: "https://picsum.photos/seed/paris-blog-hero/1920/800",
+          content: `
+                    <p>Ah, Paris! The City of Lights, romance, and unparalleled culture. While a lifetime isn't enough to explore its every nook, 48 hours can be a magical sprint through its highlights. This guide is crafted for the intrepid traveler looking to soak in as much Parisian charm as possible without feeling rushed.</p>
+                    <img src="https://picsum.photos/seed/eiffel-blog/800/500" alt="Eiffel Tower at sunset">
+                    <h2>Day 1: Iconic Landmarks & Artistic Flair</h2>
+                    <p>Start your morning bright and early at the Eiffel Tower. Pre-book your tickets online to avoid long queues. Ascend to the summit for breathtaking panoramic views of the city as it awakens. After descending, take a leisurely stroll along the Champ de Mars, perhaps grabbing a croissant from a nearby boulangerie.</p>
+                    <p>Next, make your way to the Louvre Museum. Even if you're not an art aficionado, a quick visit to see the Mona Lisa and the Venus de Milo is essential. Remember, the Louvre is vast; prioritize what you want to see. For lunch, explore the charming Latin Quarter with its narrow streets and diverse eateries. Enjoy a crêpe or a traditional French sandwich.</p>
+                    <p>The afternoon calls for a journey to Notre Dame Cathedral (viewable from outside during its restoration) and a walk along the Seine River. Consider a Bateaux-Mouches river cruise for a different perspective of the city's architecture. As evening approaches, immerse yourself in the bohemian spirit of Montmartre. Visit Sacré-Cœur Basilica, enjoy the street artists at Place du Tertre, and finish your day with a delicious French dinner.</p>
+                    <h2>Day 2: Culture, Shopping & Hidden Gems</h2>
+                    <p>Begin your second day with a visit to the Musée d'Orsay, housed in a magnificent former railway station, famous for its impressionist masterpieces. Afterward, indulge in some window shopping (or actual shopping!) along the Champs-Élysées, leading up to the majestic Arc de Triomphe. You can climb to the top for another fantastic view, especially good for sunset.</p>
+                    <img src="https://picsum.photos/seed/champs-blog/800/500" alt="Champs-Élysées with Arc de Triomphe">
+                    <p>For a taste of local Paris, head to Le Marais district in the afternoon. This historic neighborhood boasts beautiful architecture, trendy boutiques, art galleries, and charming cafes. Explore Place des Vosges, one of Paris's oldest planned squares, and grab a falafel, a local favorite in this area.</p>
+                    <p>Before dinner, consider a visit to a patisserie for some exquisite macarons or éclairs. For your final Parisian evening, perhaps a classical concert, an opera at Palais Garnier, or simply enjoying the ambiance of a cozy bistro in Saint-Germain-des-Prés. Reflect on your whirlwind adventure and start planning your return.</p>
+                    <p>Paris in 48 hours is ambitious but entirely rewarding. With a little planning and a lot of energy, you'll capture the essence of this incredible city. <em>Bon voyage!</em></p>
+                `,
+        },
+        {
+          id: "2",
+          title: "Trekking the Dolomites: A Beginner's Guide",
+          category: "Nature & Hiking",
+          categoryBadgeClass: "bg-danger",
+          date: "April 20, 2025",
+          author: "Alex Smith",
+          heroImage: "https://picsum.photos/seed/dolomites-blog-hero/1920/800",
+          content: `
+                    <p>The Dolomites, a UNESCO World Heritage site in northeastern Italy, offer some of the most stunning mountain landscapes on Earth. With their dramatic jagged peaks, lush alpine meadows, and crystal-clear lakes, they are a hiker's paradise. If you're new to trekking or just new to this region, this guide will help you plan an unforgettable adventure.</p>
+                    <img src="https://picsum.photos/seed/dolomites-trail/800/500" alt="Hiking trail in the Dolomites">
+                    <h2>Getting Started: When to Go & Where to Stay</h2>
+                    <p>The best time for hiking in the Dolomites is from late June to late September. Outside of this, snow can make many trails impassable. Popular bases include Cortina d'Ampezzo, Ortisei, Selva di Val Gardena, and Canazei. These towns offer a range of accommodations from cozy guesthouses to luxury hotels, and provide easy access to cable cars that whisk you up to higher elevations.</p>
+                    <p>For beginners, it's advisable to start with well-marked trails that aren't too steep or long. Many trails are accessible directly from towns or via cable car. Look for "family-friendly" routes or those labeled "easy" to "moderate." Consider guided tours if you're nervous about navigating on your own.</p>
+                    <p>LOREM TEXT 1: Vestibulum eu arcu varius, posuere tortor non, pharetra massa. Nam placerat, urna id pulvinar ultrices, odio diam tincidunt odio, nec lacinia nulla justo quis elit. Fusce in justo eu ipsum dapibus pharetra vitae nec ligula. Ut quis ex in nulla facilisis placerat. Donec eget enim ut velit sollicitudin tincidunt. Nulla a eros quis ligula facilisis tristique. Phasellus vitae ipsum ut est efficitur tincidunt.</p>
+                    <h2>Essential Gear & Safety Tips</h2>
+                    <p>Even on easier trails, proper gear is crucial. You'll need sturdy hiking boots with good ankle support, layered clothing (weather can change rapidly), a rain jacket, a backpack with plenty of water and snacks, sun protection (hat, sunglasses, sunscreen), and a first-aid kit. A hiking map and compass (or a reliable GPS app) are also essential.</p>
+                    <p>Always tell someone your route and expected return time. Check the weather forecast before you set out and be prepared to turn back if conditions worsen. Stick to marked trails to avoid getting lost or disturbing the fragile alpine environment.</p>
+                    <img src="https://picsum.photos/seed/dolomites-view/800/500" alt="Panoramic view of Dolomites mountains">
+                    <h2>Recommended Beginner Trails</h2>
+                    <ul>
+                        <li><strong>Seceda Ridgeline Walk (Ortisei):</strong> Take the cable car up for incredible views and a relatively flat, easy walk along a stunning ridgeline.</li>
+                        <li><strong>Lago di Braies (Pragser Wildsee):</strong> A beautiful, flat loop around one of the most iconic lakes in the Dolomites. You can also rent rowboats.</li>
+                        <li><strong>Tre Cime di Lavaredo Loop (near Cortina):</strong> While a bit longer, the classic loop around these famous three peaks is mostly flat once you reach the Rifugio Auronzo via toll road, offering spectacular views without extreme elevation gain.</li>
+                    </ul>
+                    <p>Iceland in winter is an adventure unlike any other. Embrace the cold, marvel at the landscapes, and with a bit of luck, witness the spectacular dance of the Northern Lights.</p>
+                `,
+        },
+        {
+          id: "3",
+          title: "Street Food Tour of Bangkok: Best Eats",
+          category: "Food & Culture",
+          categoryBadgeClass: "bg-success",
+          date: "March 15, 2025",
+          author: "Maria K.",
+          heroImage: "https://picsum.photos/seed/bangkok-blog-hero/1920/800",
+          content: `
+                    <p>Bangkok is a city that truly comes alive at night, and nowhere is this more evident than in its vibrant street food scene. From bustling markets to humble roadside stalls, the culinary offerings are endless and incredibly delicious. Prepare your taste buds for an adventure!</p>
+                    <img src="https://picsum.photos/seed/bangkok-street-food/800/500" alt="Variety of Thai street food dishes">
+                    <h2>Must-Try Dishes for Every Palate</h2>
+                    <p>You can't go to Bangkok without trying **Pad Thai**. Look for stalls where it's cooked fresh to order, often with shrimp or chicken, perfectly balanced between sweet, sour, and savory flavors. Another staple is **Som Tum** (Green Papaya Salad), spicy, tangy, and refreshing – a perfect counterpoint to richer dishes. For something heartier, try **Khao Man Gai** (Hainanese Chicken Rice), tender poached chicken served over fragrant rice cooked in chicken broth, with a savory dipping sauce.</p>
+                    <p>Don't shy away from **Moo Ping** (Grilled Pork Skewers), marinated in soy sauce, garlic, and sugar, then grilled to smoky perfection. They are a popular snack any time of day. And for dessert? **Mango Sticky Rice** (Khao Niao Mamuang) is a seasonal favorite, sweet ripe mango served with sticky rice bathed in coconut milk. Simply divine.</p>
+                    <p>LOREM IPSUM: Etiam in quam aliquet, fermentum magna in, feugiat ligula. Vestibulum eu arcu varius, posuere tortor non, pharetra massa. Nam placerat, urna id pulvinar ultrices, odio diam tincidunt odio, nec lacinia nulla justo quis elit. Fusce in justo eu ipsum dapibus pharetra vitae nec ligula. Ut quis ex in nulla facilisis placerat. Donec eget enim ut velit sollicitudin tincidunt. Nulla a eros quis ligula facilisis tristique. Phasellus vitae ipsum ut est efficitur tincidunt. Fusce a eros quis ligula facilisis tristique. Nullam placerat, urna id pulvinar ultrices, odio diam tincidunt odio, nec lacinia nulla justo quis elit. Fusce a eros quis ligula facilisis tristique. Nullam placerat, urna id pulvinar ultrices, odio diam tincidunt odio, nec lacinia nulla justo quis elit.</p>
+                    <h2>Where to Find the Best Street Food</h2>
+                    <ul>
+                        <li><strong>Yaowarat (Chinatown):</strong> A legendary spot for street food, especially after sunset. Expect crowds and an incredible array of dishes from seafood to noodles.</li>
+                        <li><strong>Charoenkrung Road:</strong> One of Bangkok's oldest roads, offering a mix of traditional Thai and fusion dishes.</li>
+                        <li><strong>Or Tor Kor Market:</strong> While technically a fresh market, it has an excellent food court with high-quality, pre-prepared Thai dishes. It's a great daytime option.</li>
+                        <li><strong>Victory Monument:</strong> A hub for mini-vans and public transport, also famous for its boat noodle alleys where you can sample small bowls of delicious noodle soup.</li>
+                    </ul>
+                    <img src="https://picsum.photos/seed/thai-dessert/800/500" alt="Mango Sticky Rice dessert">
+                    <h2>Tips for Your Street Food Adventure</h2>
+                    <p><strong>Be adventurous:</strong> Don't be afraid to try something new. Point to what looks good or learn a few basic Thai phrases like "Aroi mak" (delicious!).</p>
+                    <p><strong>Look for queues:</strong> A long line of locals usually indicates good food.</p>
+                    <p><strong>Hygiene:</strong> Opt for stalls with high turnover, where food is cooked fresh in front of you. Bottled water is always a good idea.</p>
+                    <p><strong>Carry cash:</strong> Most street vendors operate on a cash-only basis.</p>
+                    <p>LOREM IPSUM CONTINUED: Sed a mauris euismod, consequat mauris eu, eleifend metus. Phasellus et varius quam. Ut quis felis et odio dapibus eleifend. Proin vel justo sapien. Donec vitae ligula eu massa vehicula tincidunt vitae id dui. Donec efficitur, lacus at ultrices varius, nisl sapien dapibus felis, at efficitur dui tortor nec metus. Nullam eu ipsum dapibus pharetra vitae nec ligula. Ut quis ex in nulla facilisis placerat. Donec eget enim ut velit sollicitudin tincidunt. Nulla a eros quis ligula facilisis tristique. Phasellus vitae ipsum ut est efficitur tincidunt. Fusce a eros quis ligula facilisis tristique. Nullam placerat, urna id pulvinar ultrices, odio diam tincidunt odio, nec lacinia nulla justo quis elit. Fusce a eros quis ligula facilisis tristique. Nullam placerat, urna id pulvinar ultrices, odio diam tincidunt odio, nec lacinia nulla justo quis elit.</p>
+                `,
+        },
+        {
+          id: "4",
+          title: "A Local's Guide to Hidden London Pubs",
+          category: "City Breaks",
+          categoryBadgeClass: "bg-primary-custom",
+          date: "March 1, 2025",
+          author: "David L.",
+          heroImage: "https://picsum.photos/seed/london-pub-hero/1920/800",
+          content: `
+                    <p>London's pub scene is legendary, but beyond the well-trodden tourist spots lie a treasure trove of hidden gems. These are the pubs where history seeps from the walls, where locals gather, and where a perfect pint is always on offer. Forget the flashy new bars; embrace the cozy charm of these traditional watering holes.</p>
+                    <img src="https://picsum.photos/seed/hidden-london-pub/800/500" alt="Cozy interior of a traditional London pub">
+                    <h2>The Churchill Arms (Kensington)</h2>
+                    <p>Famous for its spectacular floral displays (it often wins awards for its hanging baskets!) and incredible Christmas decorations, The Churchill Arms is a feast for the eyes before you even step inside. Beyond the facade, you'll find a snug interior packed with Churchill memorabilia and a Thai kitchen serving authentic, delicious food – an unexpected but delightful pairing.</p>
+                    <p>Ye Olde Cheshire Cheese (Fleet Street): Step back in time at this historic pub rebuilt after the Great Fire of London in 1666. Dickens, Conan Doyle, and Chesterton were all regulars. Its labyrinthine passages, low ceilings, and smoky atmosphere transport you to another era. It's a bit hidden down an alley off Fleet Street, making its discovery all the more rewarding.</p>
+                    <p>LOREM TEXT 1: Vestibulum eu arcu varius, posuere tortor non, pharetra massa. Nam placerat, urna id pulvinar ultrices, odio diam tincidunt odio, nec lacinia nulla justo quis elit. Fusce in justo eu ipsum dapibus pharetra vitae nec ligula. Ut quis ex in nulla facilisis placerat. Donec eget enim ut velit sollicitudin tincidunt. Nulla a eros quis ligula facilisis tristique. Phasellus vitae ipsum ut est efficitur tincidunt.</p>
+                    <h2>The Eagle (Farringdon)</h2>
+                    <p>Often credited as London's first gastropub, The Eagle helped kickstart a revolution in pub food. It maintains a simple, daily changing menu focusing on fresh, seasonal ingredients served in a relaxed, no-frills setting. A true pioneer and still a fantastic place for an authentic, high-quality pub lunch or dinner.</p>
+                    <img src="https://picsum.photos/seed/churchill-arms/800/500" alt="Exterior of The Churchill Arms pub covered in flowers">
+                    <h2>The Grenadier (Belgravia)</h2>
+                    <p>A tiny, charming pub hidden in a cobbled mews in Belgravia, The Grenadier is steeped in history and ghost stories. Legend has it a soldier named Cedric was flogged to death for cheating at cards and now haunts the cellar. Patrons often leave money on the ceiling as an offering to appease his spirit. It's a truly unique London experience.</p>
+                    <p>LOREM TEXT 2: Nam placerat, urna id pulvinar ultrices, odio diam tincidunt odio, nec lacinia nulla justo quis elit. Fusce in justo eu ipsum dapibus pharetra vitae nec ligula. Ut quis ex in nulla facilisis placerat. Donec eget enim ut velit sollicitudin tincidunt. Nulla a eros quis ligula facilisis tristique. Phasellus vitae ipsum ut est efficitur tincidunt. Fusce a eros quis ligula facilisis tristique.</p>
+                `,
+        },
+        {
+          id: "5",
+          title: "Chasing the Aurora: Iceland in Winter",
+          category: "Nature & Hiking",
+          categoryBadgeClass: "bg-danger",
+          date: "Feb 10, 2025",
+          author: "Sara W.",
+          heroImage: "https://picsum.photos/seed/iceland-aurora-hero/1920/800",
+          content: `
+                    <p>Iceland in winter is a land transformed. Snow-dusted landscapes, frozen waterfalls, and the ethereal dance of the Northern Lights create a truly magical experience. Chasing the Aurora Borealis is often the primary goal, but Iceland offers so much more in its coldest months.</p>
+                    <img src="https://picsum.photos/seed/aurora-iceland/800/500" alt="Northern Lights over an Icelandic landscape">
+                    <h2>Best Time for Aurora Hunting</h2>
+                    <p>The best time to see the Northern Lights in Iceland is from late September to late March. You need clear, dark skies, and solar activity. Away from city lights is key, so consider staying in rural accommodations or booking a dedicated Northern Lights tour. Patience is crucial, as the lights can appear and disappear quickly.</p>
+                    <p>LOREM TEXT 1: Vestibulum eu arcu varius, posuere tortor non, pharetra massa. Nam placerat, urna id pulvinar ultrices, odio diam tincidunt odio, nec lacinia nulla justo quis elit. Fusce in justo eu ipsum dapibus pharetra vitae nec ligula. Ut quis ex in nulla facilisis placerat. Donec eget enim ut velit sollicitudin tincidunt. Nulla a eros quis ligula facilisis tristique. Phasellus vitae ipsum ut est efficitur tincidunt.</p>
+                    <h2>Winter Wonders Beyond the Lights</h2>
+                    <p>While the Aurora is a highlight, don't miss Iceland's other winter attractions. Visit the stunning Golden Circle, where Gullfoss waterfall often partially freezes into magnificent ice sculptures, and the Geysir geothermal area sends steam high into the crisp air. The black sand beaches of Reynisfjara near Vik are even more dramatic with a dusting of snow.</p>
+                    <p>A visit to the Blue Lagoon or one of Iceland's many natural hot springs is a must for a surreal bathing experience amidst the cold. Ice cave tours in Vatnajökull National Park offer an unparalleled opportunity to explore sparkling blue glacial ice formations – a truly otherworldly experience.</p>
+                    <img src="https://picsum.photos/seed/iceland-waterfall-winter/800/500" alt="Frozen waterfall in Iceland winter">
+                    <h2>Practical Tips for Winter Travel</h2>
+                    <ul>
+                        <li><strong>Dress warmly:</strong> Layers are your best friend. Thermal base layers, fleece, a waterproof and windproof outer shell, warm hat, gloves, and waterproof boots are essential.</li>
+                        <li><strong>Rent a 4x4:</strong> If driving yourself, a 4x4 vehicle is highly recommended for navigating potentially icy or snowy roads. Always check road conditions before you drive.</li>
+                        <li><strong>Book tours in advance:</strong> Especially for popular activities like ice caving or Northern Lights tours, spots fill up quickly.</li>
+                        <li><strong>Be flexible:</strong> Icelandic weather is notoriously unpredictable. Be prepared for changes in plans due to storms or bad driving conditions.</li>
+                    </ul>
+                    <p>Iceland in winter is an adventure unlike any other. Embrace the cold, marvel at the landscapes, and with a bit of luck, witness the spectacular dance of the Northern Lights.</p>
+                `,
+        },
+        {
+          id: "6",
+          title: "Mastering Pasta Making in Bologna",
+          category: "Food & Culture",
+          categoryBadgeClass: "bg-success",
+          date: "Jan 5, 2025",
+          author: "Chef Remo",
+          heroImage: "https://picsum.photos/seed/bologna-pasta-hero/1920/800",
+          content: `
+                    <p>Bologna, often called "La Grassa" (The Fat One), is the undisputed culinary capital of Italy. It's a city where food is not just sustenance, but a way of life, and at its heart lies the art of pasta making. Learning to craft fresh pasta here is an immersive experience into Italian tradition.</p>
+                    <img src="https://picsum.photos/seed/bologna-pasta-making/800/500" alt="Hands making fresh pasta dough">
+                    <h2>The Essentials: Ingredients & Tools</h2>
+                    <p>At its core, Bolognese pasta requires just two ingredients: flour (typically '00' flour for its fine texture) and eggs. The ratio is key, often one egg per 100g of flour, though this can vary. You'll need a large, clean wooden work surface (traditionally a 'tagliere'), a rolling pin ('mattarello'), and a sharp knife for cutting. No fancy machines needed for authentic, handmade pasta!</p>
+                    <p>LOREM TEXT 1: Vestibulum eu arcu varius, posuere tortor non, pharetra massa. Nam placerat, urna id pulvinar ultrices, odio diam tincidunt odio, nec lacinia nulla justo quis elit. Fusce in justo eu ipsum dapibus pharetra vitae nec ligula. Ut quis ex in nulla facilisis placerat. Donec eget enim ut velit sollicitudin tincidunt. Nulla a eros quis ligula facilisis tristique. Phasellus vitae ipsum ut est efficitur tincidunt.</p>
+                    <h2>The Process: From Dough to Delight</h2>
+                    <p><strong>Step 1: The Volcano.</strong> Mound the flour on your work surface and create a well in the center. Crack the eggs into the well.</p>
+                    <p><strong>Step 2: Mixing.</strong> Gently whisk the eggs with a fork, gradually incorporating flour from the inner walls of the volcano until a shaggy dough forms. Then, bring it all together with your hands.</p>
+                    <p><strong>Step 3: Kneading.</strong> This is where the magic happens. Knead the dough vigorously for 10-15 minutes until it's smooth, elastic, and no longer sticky. It should feel like a baby's bottom.</p>
+                    <p><strong>Step 4: Resting.</strong> Wrap the dough tightly in plastic wrap and let it rest at room temperature for at least 30 minutes. This relaxes the gluten, making it easier to roll.</p>
+                    <img src="https://picsum.photos/seed/bologna-tagliatelle/800/500" alt="Fresh tagliatelle pasta drying">
+                    <p><strong>Step 5: Rolling.</strong> Using your mattarello, roll the dough out very thinly. The goal is transparency – you should almost be able to read a newspaper through it. This requires patience and technique, rolling from the center outwards, turning the dough frequently.</p>
+                    <p><strong>Step 6: Cutting.</strong> For classics like tagliatelle or fettuccine, fold the rolled-out dough into a loose cylinder, then slice to your desired width. Unfurl the strands and let them dry slightly on a floured surface.</p>
+                    <h2>Popular Bolognese Pasta Shapes</h2>
+                    <ul>
+                        <li><strong>Tagliatelle:</strong> The most famous, often served with a rich Ragu alla Bolognese.</li>
+                        <li><strong>Tortellini:</strong> Small, navel-shaped filled pasta, typically served in broth.</li>
+                        <li><strong>Lasagne:</strong> Layers of thin pasta sheets, ragu, and béchamel sauce.</li>
+                        <li><strong>Gramigna:</strong> A short, curly pasta, great with sausage sauce.</li>
+                    </ul>
+                    <p>Learning pasta making in Bologna isn't just about cooking; it's about connecting with a culinary heritage. It's a delicious, rewarding experience that you'll carry with you long after you leave "La Grassa."</p>
+                `,
+        },
+      ];
+
+      function getParameterByName(name, url = window.location.href) {
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+          results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return "";
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+      }
+
+      function loadBlogPost() {
+        const postId = getParameterByName("id") || "1"; // Default to ID 1 if none provided
+        const post = blogPosts.find((p) => p.id === postId);
+
+        if (post) {
+          $("#blogHeroImage").attr("src", post.heroImage);
+          $("#blogHeroTitle").text(post.title.toUpperCase());
+          $("#blogPostTitle").text(post.title);
+          $("#blogPostCategoryBadge")
+            .text(post.category)
+            .addClass(post.categoryBadgeClass);
+          $("#blogPostDate").html(
+            `<i class="fas fa-calendar-alt"></i> ${post.date}`
+          );
+          $("#blogPostAuthor").html(
+            `<i class="fas fa-user"></i> ${post.author}`
+          );
+          $("#blogPostContent").html(post.content);
+          document.title = `Wanderlust Adventures - ${post.title}`; // Update page title
+        } else {
+          // Handle case where post is not found
+          $("#blogHeroTitle").text("POST NOT FOUND");
+          $("#blogPostTitle").text("Oops! This blog post could not be found.");
+          $("#blogPostContent").html(
+            '<p class="text-center text-muted">The article you are looking for might have been removed or never existed.</p>'
+          );
+          $("#blogHeroImage").attr(
+            "src",
+            "https://picsum.photos/seed/error-blog/1920/800"
+          );
+        }
+      }
+
+      $(document).ready(function () {
+        // --- START GLOBAL JAVASCRIPT (Copy this block to all pages) ---
+        var navbar = $("#mainNav");
+        var scrollThreshold = 100;
+
+        $(window).scroll(function () {
+          if ($(document).scrollTop() > scrollThreshold) {
+            navbar
+              .removeClass("navbar-transparent")
+              .addClass("navbar-scrolled");
+          } else {
+            navbar
+              .removeClass("navbar-scrolled")
+              .addClass("navbar-transparent");
+          }
+        });
+        $(window).scroll();
+
+        $('a[href^="#"]').on("click", function (event) {
+          if (this.hash !== "") {
+            event.preventDefault();
+            var hash = this.hash;
+            var targetElement = $(hash);
+
+            if (targetElement.length) {
+              var navbarHeight = navbar.hasClass("navbar-scrolled") ? 70 : 0;
+              var scrollTopPosition = targetElement.offset().top - navbarHeight;
+
+              $("html, body").animate(
+                {
+                  scrollTop: scrollTopPosition,
+                },
+                800
+              );
+            }
+          }
+        });
+
+        loadBlogPost();
+
+        $("#commentForm").on("submit", function (e) {
+          e.preventDefault();
+          const name = $(this).find("input:eq(0)").val();
+          const commentText = $(this).find("textarea").val();
+
+          if (name && commentText) {
+            const newComment = `
+                        <div class="comment-box">
+                            <p class="mb-0 comment-author">${name} <span class="comment-date">| Just Now</span></p>
+                            <p class="small mt-1 mb-0">${commentText}</p>
+                        </div>
+                    `;
+            $("#commentList").prepend(newComment);
+            $(this)[0].reset();
+
+            const currentCount = $("#commentList .comment-box").length;
+            $("#commentsCount").text(`${currentCount} Comments`);
+            alert("Comment posted!");
+          } else {
+            alert("Please enter your name and comment.");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

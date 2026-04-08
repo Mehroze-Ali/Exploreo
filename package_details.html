@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exploreo - Package Details</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMDJdZ0UuP+t6wJvBwFf1A0uXpGIfG5vYlqXmS4zXWd8+oK5tU+T1g+N7g+Gg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <style>
+      /* Color Palette from user image */
+      :root {
+        --color-deep-navy: #021024;
+        --color-dark-blue: #052659; /* Primary Color */
+        --color-medium-blue: #5483b3;
+        --color-light-slate: #7da0ca;
+        --color-sky-blue: #c1e8ff; /* Light Accent / Neumorphism Background */
+        --color-background-blue: #e0f0f8; /* A shade of light blue to match the image background */
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        scroll-behavior: smooth;
+        padding-top: 0;
+        background-color: var(--color-background-blue);
+      }
+
+      /* Custom utility classes based on the new palette */
+      .bg-primary-custom {
+        background-color: var(--color-dark-blue) !important;
+      }
+
+      .btn-primary-custom {
+        background-color: var(--color-dark-blue);
+        border-color: var(--color-dark-blue);
+        color: white;
+        transition: all 0.3s;
+      }
+
+      .btn-primary-custom:hover {
+        background-color: var(--color-medium-blue);
+        border-color: var(--color-medium-blue);
+      }
+
+      .text-primary-custom {
+        color: var(--color-dark-blue) !important;
+      }
+
+      /* --- START GLOBAL NAVBAR STYLES (Copy to all pages) --- */
+      .navbar {
+        transition: background-color 0.3s ease;
+      }
+      .navbar-transparent {
+        background-color: transparent !important;
+        box-shadow: none !important;
+      }
+      .navbar-transparent .nav-link {
+        color: rgba(255, 255, 255, 0.8) !important;
+      }
+      .navbar-transparent .nav-link:hover {
+        color: var(--color-sky-blue) !important;
+      }
+      .navbar-transparent .nav-link.active {
+        color: var(--color-sky-blue) !important;
+        border-bottom: 2px solid var(--color-sky-blue);
+      }
+      .navbar-scrolled {
+        background-color: var(--color-dark-blue) !important;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+      }
+      .navbar-brand img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .navbar-brand img {
+        height: 90px;
+        width: auto;
+      }
+
+      @media (max-width: 768px) {
+        .navbar-brand img {
+          height: 50px;
+        }
+      }
+      /* --- END GLOBAL NAVBAR STYLES (Copy to all pages) --- */
+
+      /* --- START GLOBAL HERO BANNER STYLES (Copy to all pages) --- */
+      #page-hero {
+        position: relative;
+        height: 55vh;
+        min-height: 300px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+        margin-bottom: 50px;
+      }
+
+      #page-hero img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -2;
+      }
+
+      #page-hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(2, 16, 36, 0.5);
+        z-index: -1;
+      }
+
+      .hero-banner-title {
+        font-size: 4.5rem;
+        font-weight: 700;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        z-index: 1;
+      }
+
+      /* Banner Responsiveness */
+      @media (max-width: 768px) {
+        #page-hero {
+          height: 40vh;
+        }
+        .hero-banner-title {
+          font-size: 2.5rem;
+          letter-spacing: 3px;
+        }
+      }
+      /* --- END GLOBAL HERO BANNER STYLES (Copy to all pages) --- */
+
+      /* --- START PACKAGE DETAILS SPECIFIC STYLES --- */
+
+      /* Image Slider (Carousel) */
+      #packageImageSlider .carousel-inner {
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      }
+      #packageImageSlider .carousel-item img {
+        height: 450px;
+        object-fit: cover;
+      }
+
+      /* Itinerary Accordion */
+      .accordion-button:not(.collapsed) {
+        color: white;
+        background-color: var(--color-dark-blue);
+        box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.125);
+      }
+      .accordion-button {
+        font-weight: 600;
+      }
+      .accordion-body {
+        background-color: #f8f9fa;
+      }
+
+      /* Included/Excluded List */
+      .include-list,
+      .exclude-list {
+        list-style: none;
+        padding: 0;
+      }
+      .include-list li {
+        color: var(--color-dark-blue);
+        margin-bottom: 8px;
+      }
+      .exclude-list li {
+        color: #dc3545;
+        margin-bottom: 8px;
+      }
+      .include-list i,
+      .exclude-list i {
+        margin-right: 10px;
+        font-size: 1rem;
+      }
+
+      /* --- NEUMORPHISM BOOKING FORM STYLES --- */
+
+      #booking-form-wrapper {
+        max-width: 1000px; /* Increased max-width for wider form */
+        margin: 50px auto;
+      }
+      #booking-form-card {
+        border: none;
+        border-radius: 30px; /* Rounded corners for neumorphism */
+        background-color: var(--color-background-blue);
+        padding: 40px;
+        position: relative;
+        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1),
+          -10px -10px 20px rgba(255, 255, 255, 0.7); /* Neumorphism shadow */
+      }
+
+      .form-label {
+        color: var(--color-dark-blue);
+      }
+
+      .form-control,
+      .form-select {
+        padding: 15px 20px;
+        border: none;
+        border-radius: 25px;
+        background-color: var(--color-background-blue); /* change this to sky */
+        box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.2),
+          inset -5px -5px 10px rgba(255, 255, 255, 0.7);
+        color: var(--color-deep-navy);
+        transition: all 0.3s ease;
+      }
+
+      .form-control:focus,
+      .form-select:focus {
+        outline: none;
+        box-shadow: inset 2px 2px 5px rgba(100, 100, 100, 0.1),
+          inset -2px -2px 5px rgba(255, 255, 255, 0.7),
+          0 0 0 2px var(--color-medium-blue); /* Subtle focus ring */
+      }
+
+      #inquiryForm .btn-primary-custom {
+        padding: 15px 20px;
+        border-radius: 25px;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2); /* Outer shadow for button prominence */
+        transition: all 0.3s ease;
+      }
+
+      #inquiryForm .btn-primary-custom:hover {
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2),
+          -2px -2px 5px rgba(255, 255, 255, 0.5); /* Pressed effect simulation */
+        transform: translateY(0);
+      }
+
+      /* --- END PACKAGE DETAILS SPECIFIC STYLES --- */
+
+      /* --- START GLOBAL FOOTER STYLES (Copy to all pages) --- */
+      .footer-bg {
+        background-color: var(--color-deep-navy) !important;
+      }
+      footer a {
+        color: var(--color-light-slate);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      footer a:hover {
+        color: var(--color-sky-blue);
+      }
+
+      /* AUTH UI STYLES */
+      .profile-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(
+          --color-light-slate
+        ); /* Light circle background */
+        color: var(--color-deep-navy); /* Dark text color */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        border: 2px solid white;
+      }
+      .profile-avatar:hover {
+        background-color: var(--color-sky-blue);
+      }
+      /* --- END GLOBAL FOOTER STYLES (Copy to all pages) --- */
+    </style>
+  </head>
+  <body>
+    <nav
+      class="navbar navbar-expand-lg fixed-top navbar-dark navbar-transparent"
+      id="mainNav"
+    >
+      <div class="container">
+        <a class="navbar-brand" href="index.html"
+          ><img src="assets/logo.png" alt="Exploreo Logo"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="destinations.html">Destinations</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="packages.html">Packages</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="blog.html">Blog</a>
+            </li>
+          </ul>
+          <!-- NOTE: Ensure 'Book Now' button is included here if needed, or moved elsewhere -->
+          <a
+            href="packages.html"
+            class="btn btn-light ms-lg-3 d-none d-lg-block"
+            >Book Now</a
+          >
+
+          <!-- START AUTH/PROFILE UI -->
+          <div class="d-flex align-items-center ms-lg-3 gap-2">
+            <!-- 1. SIGN IN / SIGN UP BUTTON (Default: Visible) -->
+            <div id="authButtons" style="display: block">
+              <a href="login-signup.php" class="btn btn-light">Sign In / Up</a>
+            </div>
+
+            <!-- 2. PROFILE AVATAR (Default: Hidden. JS controls visibility) -->
+            <div
+              id="userProfile"
+              class="profile-avatar"
+              title="View Profile / Logout"
+              onclick="handleLogout()"
+              style="display: none"
+            >
+              <span id="userInitial">U</span>
+            </div>
+          </div>
+          <!-- END AUTH/PROFILE UI -->
+        </div>
+      </div>
+    </nav>
+
+    <header id="page-hero">
+      <img
+        src="https://picsum.photos/seed/details-page-hero/1920/800"
+        alt="Scenic view of mountain and sea"
+      />
+      <h1 class="hero-banner-title" id="heroCountryName">LOADING...</h1>
+    </header>
+    <main class="py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <div class="mb-4">
+              <h2
+                class="display-5 fw-bold text-deep-navy mb-1"
+                id="packageTitle"
+              >
+                Loading Package...
+              </h2>
+              <h3 class="text-primary-custom fw-bold" id="packagePrice">
+                $0
+                <span class="small text-muted fw-normal" id="packageTagline"
+                  >per person</span
+                >
+              </h3>
+              <p class="lead text-muted mt-3" id="packageDescription">
+                Loading details...
+              </p>
+              <hr />
+            </div>
+
+            <section id="package-slider" class="mb-5">
+              <h4 class="text-deep-navy mb-3">Photo Gallery</h4>
+              <div
+                id="packageImageSlider"
+                class="carousel slide"
+                data-bs-ride="carousel"
+              >
+                <div class="carousel-indicators" id="sliderIndicators"></div>
+                <div class="carousel-inner" id="sliderInner"></div>
+                <button
+                  class="carousel-control-prev"
+                  type="button"
+                  data-bs-target="#packageImageSlider"
+                  data-bs-slide="prev"
+                >
+                  <span
+                    class="carousel-control-prev-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button
+                  class="carousel-control-next"
+                  type="button"
+                  data-bs-target="#packageImageSlider"
+                  data-bs-slide="next"
+                >
+                  <span
+                    class="carousel-control-next-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+            </section>
+
+            <section id="itinerary" class="mb-5">
+              <h3 class="text-deep-navy mb-3">Detailed Itinerary</h3>
+              <div class="accordion" id="itineraryAccordion"></div>
+            </section>
+
+            <section id="inclusions" class="mb-5 row">
+              <div class="col-md-6 mb-4 mb-md-0">
+                <h3 class="text-success mb-3">
+                  <i class="fas fa-check-circle me-2"></i> Included
+                </h3>
+                <ul class="include-list" id="includedList"></ul>
+              </div>
+              <div class="col-md-6">
+                <h3 class="text-danger mb-3">
+                  <i class="fas fa-times-circle me-2"></i> Excluded
+                </h3>
+                <ul class="exclude-list" id="excludedList"></ul>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <section id="booking-form-wrapper" class="mb-5">
+          <div id="booking-form-card">
+            <!-- Add this empty div inside the #booking-form-card BEFORE the form starts -->
+            <div
+              id="bookingMessageContainer"
+              class="d-none text-center small mb-3"
+            ></div>
+            <h4 class="card-title text-center text-primary-custom fw-bold mb-4">
+              Secure Your Booking Now
+            </h4>
+            <form
+              id="inquiryForm"
+              class="row g-3"
+              method="POST"
+              action="package-details.php"
+            >
+              <input
+                type="hidden"
+                id="packageId"
+                name="packageId"
+                value=""
+                required
+              />
+
+              <div class="col-md-6">
+                <label for="fullName" class="form-label small fw-bold"
+                  >Full Name</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="fullName"
+                  name="fullName"
+                  placeholder="Jane Doe"
+                  required
+                />
+              </div>
+              <div class="col-md-6">
+                <label for="email" class="form-label small fw-bold"
+                  >Email Address</label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  placeholder="email@example.com"
+                  required
+                />
+              </div>
+              <div class="col-md-6">
+                <label for="phone" class="form-label small fw-bold"
+                  >Phone Number</label
+                >
+                <input
+                  type="tel"
+                  class="form-control"
+                  id="phone"
+                  name="phone"
+                  placeholder="+1 (555) 123-4567"
+                  required
+                />
+              </div>
+              <div class="col-md-6">
+                <label for="travelers" class="form-label small fw-bold"
+                  >Number of Travelers</label
+                >
+                <select
+                  class="form-select"
+                  id="travelers"
+                  name="travelers"
+                  required
+                >
+                  <option value="">Select...</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3-5</option>
+                  <option>6+</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label for="date" class="form-label small fw-bold"
+                  >Preferred Start Date</label
+                >
+                <input
+                  type="date"
+                  class="form-control"
+                  id="date"
+                  name="startDate"
+                  required
+                />
+              </div>
+              <div class="col-12">
+                <label for="message" class="form-label small fw-bold"
+                  >Special Requests</label
+                >
+                <textarea
+                  class="form-control"
+                  id="message"
+                  name="message"
+                  rows="3"
+                  placeholder="Dietary restrictions, flight preferences, etc."
+                ></textarea>
+              </div>
+              <div class="col-12 mt-4">
+                <button
+                  type="submit"
+                  class="btn btn-primary-custom w-100 py-2 fw-bold"
+                >
+                  Send Booking Inquiry
+                </button>
+              </div>
+              <p class="text-center small text-muted mt-3 mb-0">
+                We protect your privacy. A confirmation will be sent via email.
+              </p>
+            </form>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="text-white pt-5 pb-4 mt-5 footer-bg">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-4 col-md-6">
+            <h5 class="text-white mb-3 fw-bold footer-heading">
+              <i class="fas fa-globe me-2"></i>Wanderlust Adventures
+            </h5>
+            <p class="small text-white-50">
+              Explore the world with tailored itineraries and exceptional
+              service. Your journey begins here.
+            </p>
+            <p class="mb-1 small">
+              <i class="fas fa-map-marker-alt me-2 text-white-50"></i>123 Travel
+              Road, Explorer City, Earth
+            </p>
+            <p class="mb-1 small">
+              <i class="fas fa-envelope me-2 text-white-50"></i
+              >info@wanderlust.com
+            </p>
+          </div>
+
+          <div class="col-lg-3 col-md-6">
+            <h5 class="text-white mb-3 fw-bold footer-heading">Quick Links</h5>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a href="index.html" class="text-white-50">Home</a>
+              </li>
+              <li class="mb-2">
+                <a href="packages.html" class="text-white-50">Packages</a>
+              </li>
+              <li class="mb-2">
+                <a href="destinations.html" class="text-white-50"
+                  >Destinations</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="about.html" class="text-white-50">About Us</a>
+              </li>
+              <li class="mb-2">
+                <a href="blog.html" class="text-white-50">Blog</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg-5 col-md-12">
+            <h5 class="text-white mb-3 fw-bold footer-heading">
+              Stay Connected
+            </h5>
+            <p class="small text-white-50">Subscribe for exclusive deals.</p>
+            <form class="input-group mb-3">
+              <input
+                type="email"
+                class="form-control"
+                placeholder="Your Email"
+                aria-label="Your Email"
+              />
+              <button class="btn btn-light" type="submit">Subscribe</button>
+            </form>
+
+            <div class="mt-4">
+              <a href="#" class="text-white me-3"
+                ><i class="fab fa-facebook-f fa-lg"></i
+              ></a>
+              <a href="#" class="text-white me-3"
+                ><i class="fab fa-twitter fa-lg"></i
+              ></a>
+              <a href="#" class="text-white me-3"
+                ><i class="fab fa-instagram fa-lg"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+
+        <hr class="mt-4 mb-3 text-white-50" />
+        <div class="text-center small text-white-50">
+          &copy; 2025 Wanderlust Adventures. All Rights Reserved.
+        </div>
+      </div>
+    </footer>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      // Placeholder function to simulate user data retrieval from storage
+      function getLoggedInUser() {
+        // Reads a mock user name from localStorage set by loading.php
+        return localStorage.getItem("userName");
+      }
+
+      function updateAuthStatusUI() {
+        const userName = getLoggedInUser();
+        const $authButtons = $("#authButtons");
+        const $userProfile = $("#userProfile");
+        const $userInitial = $("#userInitial");
+
+        if (userName) {
+          // User is logged in: SHOW Avatar, HIDE Buttons
+          $authButtons.css("display", "none");
+          $userProfile.css("display", "flex");
+          $userInitial.text(userName.charAt(0).toUpperCase());
+        } else {
+          // User is NOT logged in: HIDE Avatar, SHOW Buttons
+          $userProfile.css("display", "none");
+          $authButtons.css("display", "block");
+        }
+      }
+
+      function handleLogout() {
+        // Clears the logged-in state, alerts user, and reloads the page
+        localStorage.removeItem("userName");
+        alert("You have been logged out. Redirecting to home.");
+        window.location.reload();
+      }
+
+      // Expose handleLogout globally for the HTML onclick attribute
+      window.handleLogout = handleLogout;
+
+      // -----------------------------------------------------
+      // IMPORTANT: You MUST call updateAuthStatusUI() inside your main ready function
+      $(document).ready(function () {
+        // Call this immediately to set the UI state correctly
+        updateAuthStatusUI();
+
+        // ... (rest of your existing code and other $(document).ready blocks)
+      });
+      // --- MOCK PACKAGE DATA (12 Packages to prevent 'Not Found' errors) ---
+      const packageData = {
+        venice: {
+          title: "Venice & Rome Grand Tour",
+          country: "Italy",
+          countryId: "italy",
+          price: "$3,500",
+          tagline: "7-day luxury journey across Italy.",
+          description:
+            "Experience the timeless beauty of Italy with a comprehensive tour of Venice's canals, Rome's ancient wonders, renaissance art, and culinary delights. This all-inclusive package covers top-tier accommodation and guided excursions.",
+          images: [
+            "https://picsum.photos/seed/detail-venice1/1000/450",
+            "https://picsum.photos/seed/detail-venice2/1000/450",
+            "https://picsum.photos/seed/detail-venice3/1000/450",
+          ],
+          itinerary: [
+            {
+              title: "Day 1: Arrival in Venice & Gondola Ride",
+              icon: "fas fa-check-circle",
+              details:
+                "Transfer from VCE. Private gondola ride and welcome dinner.",
+            },
+            {
+              title: "Day 2: Doge's Palace & St. Mark's Square",
+              icon: "fas fa-route",
+              details:
+                "Morning guided tour of Doge's Palace and St. Mark's Basilica.",
+            },
+            {
+              title: "Day 3: Train to Rome",
+              icon: "fas fa-train",
+              details:
+                "Morning high-speed train journey to Rome. Check-in near the Trevi Fountain.",
+            },
+            {
+              title: "Day 4: Ancient Rome & Colosseum",
+              icon: "fas fa-university",
+              details:
+                "Full-day guided tour of the Colosseum, Roman Forum, and Palatine Hill.",
+            },
+            {
+              title: "Day 5: Vatican City & Departure",
+              icon: "fas fa-crosshairs",
+              details: "Morning tour of Vatican City. Evening transfer to FCO.",
+            },
+          ],
+          included: [
+            "Roundtrip flights (Economy)",
+            "5 Nights in 4-star hotels",
+            "Daily breakfast & 2 gourmet dinners",
+            "All transfers",
+            "Entry to all major sites",
+          ],
+          excluded: [
+            "Alcoholic beverages during meals",
+            "Visa and travel insurance",
+            "Gratuities for local guides",
+          ],
+        },
+        himalaya: {
+          title: "Himalayan Base Camp Trek",
+          country: "Nepal",
+          countryId: "nepal",
+          price: "$1,800",
+          tagline: "10-day epic trek to the foothills of the Himalayas.",
+          description:
+            "A challenging but rewarding journey to experience the majesty of the Himalayas. Expert local guides, all equipment rentals included. Focus on altitude acclimatization and responsible trekking.",
+          images: [
+            "https://picsum.photos/seed/detail-himalaya1/1000/450",
+            "https://picsum.photos/seed/detail-himalaya2/1000/450",
+            "https://picsum.photos/seed/detail-himalaya3/1000/450",
+          ],
+          itinerary: [
+            {
+              title: "Day 1-2: Kathmandu Arrival & Flight to Lukla",
+              icon: "fas fa-mountain",
+              details:
+                "Arrive in Kathmandu, followed by a scenic flight to Lukla and first short trek to Phakding.",
+            },
+            {
+              title: "Day 3-5: Trekking to Namche Bazaar & Acclimatization",
+              icon: "fas fa-campground",
+              details:
+                "Ascent to Namche Bazaar (Sherpa Capital). Rest day for acclimatization hikes.",
+            },
+            {
+              title: "Day 6-8: Ascent to Base Camp",
+              icon: "fas fa-person-hiking",
+              details:
+                "Trek through Tengboche and Dingboche, reaching the viewing point near Base Camp on Day 7.",
+            },
+            {
+              title: "Day 9-10: Descent and Departure",
+              icon: "fas fa-plane-departure",
+              details:
+                "Rapid descent towards Lukla. Farewell dinner and morning flight back to Kathmandu.",
+            },
+          ],
+          included: [
+            "Internal flights (Kathmandu-Lukla return)",
+            "9 Nights in teahouses/lodges",
+            "All meals during the trek",
+            "Experienced guide",
+            "Permits and national park fees",
+          ],
+          excluded: [
+            "Main international flights",
+            "Gear rental (sleeping bag, boots)",
+            "Bottled water/snacks",
+            "Personal spending money",
+          ],
+        },
+        kyoto: {
+          title: "Ancient Kyoto Temples",
+          country: "Japan",
+          countryId: "japan-kyoto",
+          price: "$2,200",
+          tagline: "5-day cultural immersion in Japan's historic heart.",
+          description:
+            "Immerse yourself in the serene beauty and rich history of Kyoto. Visit iconic temples, traditional gardens, and experience a glimpse of ancient Japan.",
+          images: [
+            "https://picsum.photos/seed/detail-kyoto1/1000/450",
+            "https://picsum.photos/seed/detail-kyoto2/1000/450",
+            "https://picsum.photos/seed/detail-kyoto3/1000/450",
+          ],
+          itinerary: [
+            {
+              title: "Day 1: Arrival & Nishiki Market",
+              icon: "fas fa-landmark",
+              details:
+                "Arrive at Kansai International (KIX). Check-in and explore the bustling Nishiki Market.",
+            },
+            {
+              title: "Day 2: Golden Pavilion & Zen Gardens",
+              icon: "fas fa-pagelines",
+              details:
+                "Visit Kinkaku-ji (Golden Pavilion) and Ryoan-ji Temple's rock garden.",
+            },
+            {
+              title: "Day 3: Fushimi Inari & Tea Ceremony",
+              icon: "fas fa-torii-gate",
+              details:
+                "Hike through the thousands of red torii gates at Fushimi Inari. Participate in a traditional tea ceremony.",
+            },
+            {
+              title: "Day 4: Gion District",
+              icon: "fas fa-mask",
+              details:
+                "Explore the historic Gion district, seeking out geisha and traditional wooden machiya houses.",
+            },
+            {
+              title: "Day 5: Departure",
+              icon: "fas fa-plane-departure",
+              details: "Transfer to KIX for departure.",
+            },
+          ],
+          included: [
+            "4 Nights in traditional Ryokan stay",
+            "Daily breakfast",
+            "Bullet train tickets (Roundtrip to Kyoto)",
+            "Guided temple tours",
+            "Tea ceremony experience",
+          ],
+          excluded: ["International airfare", "Lunch and dinner", "Souvenirs"],
+        },
+        florida: {
+          title: "Florida Theme Park Adventure",
+          country: "USA (Florida)",
+          countryId: "usa-florida",
+          price: "$1,200",
+          tagline: "7-day family trip including all major theme parks.",
+          description:
+            "Create unforgettable memories with your family at Florida's world-famous theme parks. This budget-friendly package is packed with thrills, magic, and entertainment for all ages. Accommodation is near the major attractions.",
+          images: [
+            "https://picsum.photos/seed/detail-florida1/1000/450",
+            "https://picsum.photos/seed/detail-florida2/1000/450",
+            "https://picsum.photos/seed/detail-florida3/1000/450",
+          ],
+          itinerary: [
+            {
+              title: "Day 1: Arrival & Magic Kingdom",
+              icon: "fas fa-magic",
+              details:
+                "Arrive in Orlando, check-in, and start your adventure with entry to Magic Kingdom Park.",
+            },
+            {
+              title: "Day 2-4: Thrill Rides & Water Parks",
+              icon: "fas fa-roller-coaster",
+              details:
+                "Dedicated days for exploring other major theme parks and a popular water park.",
+            },
+            {
+              title: "Day 5: Shopping & Relaxation",
+              icon: "fas fa-shopping-bag",
+              details:
+                "Free day for souvenir shopping at Disney Springs or relaxing by the hotel pool.",
+            },
+            {
+              title: "Day 6-7: Final Park & Departure",
+              icon: "fas fa-plane-arrival",
+              details:
+                "Visit Universal Studios. Morning departure to Orlando International Airport (MCO) on Day 7.",
+            },
+          ],
+          included: [
+            "7 Days / 6 Nights accommodation",
+            "Entry to 3 major theme parks",
+            "Daily breakfast",
+            "Shuttle service to/from parks",
+            "Airport transfers (MCO)",
+          ],
+          excluded: [
+            "Lunch and dinner meals",
+            "Flight tickets to/from Orlando",
+            "Optional premium experiences (e.g., VIP tours)",
+            "Travel insurance",
+          ],
+        },
+        safari: {
+          title: "South African Wildlife Safari",
+          country: "South Africa",
+          countryId: "south-africa",
+          price: "$4,500",
+          tagline: "14-day thrilling safari adventure in Kruger National Park.",
+          description:
+            "Embark on a thrilling safari adventure through South Africa's iconic national parks. Witness the Big Five in their natural habitat and experience the wild heart of Africa. Luxury tented camps and professional rangers provided.",
+          images: [
+            "https://picsum.photos/seed/detail-safari1/1000/450",
+            "https://picsum.photos/seed/detail-safari2/1000/450",
+            "https://picsum.photos/seed/detail-safari3/1000/450",
+          ],
+          itinerary: [
+            {
+              title: "Day 1-3: Cape Town Exploration",
+              icon: "fas fa-city",
+              details:
+                "Arrive in Cape Town. Visit Table Mountain and Robben Island. Wine tasting tour.",
+            },
+            {
+              title: "Day 4: Flight to Kruger & First Game Drive",
+              icon: "fas fa-plane",
+              details:
+                "Morning flight to Kruger area. Afternoon check-in to luxury camp and first sunset game drive.",
+            },
+            {
+              title: "Day 5-10: Safari Immersion",
+              icon: "fas fa-camera-retro",
+              details:
+                "Daily morning and evening game drives with expert rangers. Tracking the Big Five.",
+            },
+            {
+              title: "Day 11-14: Beach Relaxation & Departure",
+              icon: "fas fa-umbrella-beach",
+              details:
+                "Transfer to the Eastern Cape coast for beach relaxation before departing from Port Elizabeth.",
+            },
+          ],
+          included: [
+            "International and internal flights",
+            "Luxury camp stays",
+            "All meals during safari",
+            "Game drive permits and fees",
+            "Wine tasting tour",
+          ],
+          excluded: ["Visa fees", "Souvenirs", "Alcohol outside meal plan"],
+        },
+        maldives: {
+          title: "Maldives Water Bungalow Stay",
+          country: "Maldives",
+          countryId: "maldives",
+          price: "$2,800",
+          tagline: "5-day indulgent retreat in a private water bungalow.",
+          description:
+            "Indulge in unparalleled luxury with an exquisite stay in a private water bungalow in the Maldives. Crystal-clear waters, white-sand beaches, and ultimate relaxation await. Perfect for honeymoons and tranquil escapes.",
+          images: [
+            "https://picsum.photos/seed/detail-maldives1/1000/450",
+            "https://picsum.photos/seed/detail-maldives2/1000/450",
+            "https://picsum.photos/seed/detail-maldives3/1000/450",
+          ],
+          itinerary: [
+            {
+              title: "Day 1: Arrival & Check-in",
+              icon: "fas fa-cocktail",
+              details:
+                "Seaplane transfer to your private island resort. Welcome drink and check-in to your overwater bungalow.",
+            },
+            {
+              title: "Day 2: Snorkeling & Coral Reefs",
+              icon: "fas fa-fish",
+              details:
+                "Guided snorkeling tour to explore vibrant coral reefs and marine life.",
+            },
+            {
+              title: "Day 3: Sunset Cruise & Spa",
+              icon: "fas fa-ship",
+              details:
+                "Afternoon at the resort spa. Evening sunset cruise on a traditional Dhoni boat.",
+            },
+            {
+              title: "Day 4: Leisure & Fine Dining",
+              icon: "fas fa-utensils",
+              details:
+                "Full day at leisure. Private beachfront dining experience.",
+            },
+            {
+              title: "Day 5: Departure",
+              icon: "fas fa-plane-departure",
+              details:
+                "Morning seaplane transfer to Male International Airport (MLE).",
+            },
+          ],
+          included: [
+            "Seaplane transfers (return)",
+            "4 Nights in luxury water bungalow",
+            "Half-board (breakfast and dinner)",
+            "Snorkeling excursion",
+            "Sunset cruise",
+          ],
+          excluded: [
+            "International airfare",
+            "Lunch meals",
+            "Spa treatments",
+            "Tips/Gratuities",
+          ],
+        },
+      };
+
+      // --- DYNAMIC CONTENT GENERATION FUNCTIONS ---
+
+      function getUrlParameter(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+        var results = regex.exec(location.search);
+        return results === null
+          ? ""
+          : decodeURIComponent(results[1].replace(/\+/g, " "));
+      }
+
+      function loadPackageDetails(packageId) {
+        const data = packageData[packageId];
+
+        if (!data) {
+          $("#packageTitle").text("Error: Package Not Found");
+          $("#packageDescription").text(
+            "The requested package ID is invalid. Please return to the Packages page."
+          );
+          $("#heroCountryName").text("ERROR");
+          return;
+        }
+
+        // *** REQUIRED CHANGE: SET THE HIDDEN INPUT VALUE HERE ***
+        $("#packageId").val(packageId);
+
+        // 1. Load Main Details
+        $("#packageTitle").text(data.title);
+        $("#packagePrice").html(
+          data.price +
+            ' <span class="small text-muted fw-normal" id="packageTagline">' +
+            data.tagline +
+            "</span>"
+        );
+        $("#packageDescription").text(data.description);
+
+        // 2. Load Hero Banner Title (Country Name Only)
+        const heroTitle =
+          data.country.split("(")[0].trim().toUpperCase() || "DETAILS";
+        $("#heroCountryName").text(heroTitle);
+
+        // 3. Load Image Slider
+        let sliderIndicators = "";
+        let sliderInner = "";
+        data.images.forEach((imgUrl, index) => {
+          const activeClass = index === 0 ? "active" : "";
+          sliderIndicators += `<button type="button" data-bs-target="#packageImageSlider" data-bs-slide-to="${index}" class="${activeClass}" aria-label="Slide ${
+            index + 1
+          }"></button>`;
+          sliderInner += `
+                      <div class="carousel-item ${activeClass}">
+                          <img src="${imgUrl}" class="d-block w-100" alt="${
+            data.title
+          } Image ${index + 1}">
+                      </div>`;
+        });
+        $("#sliderIndicators").html(sliderIndicators);
+        $("#sliderInner").html(sliderInner);
+
+        // 4. Load Itinerary Accordion
+        let itineraryHtml = "";
+        data.itinerary.forEach((item, index) => {
+          const activeShow = index === 0 ? "show" : "";
+          const collapsedClass = index === 0 ? "" : "collapsed";
+          const expanded = index === 0 ? "true" : "false";
+
+          itineraryHtml += `
+                      <div class="accordion-item">
+                          <h2 class="accordion-header" id="heading${index}">
+                              <button class="accordion-button ${collapsedClass}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${index}" aria-expanded="${expanded}" aria-controls="collapse${index}">
+                                  <i class="${item.icon} me-3"></i> ${item.title}
+                              </button>
+                          </h2>
+                          <div id="collapse${index}" class="accordion-collapse collapse ${activeShow}" aria-labelledby="heading${index}" data-bs-parent="#itineraryAccordion">
+                              <div class="accordion-body">
+                                  ${item.details}
+                              </div>
+                          </div>
+                      </div>`;
+        });
+        $("#itineraryAccordion").html(itineraryHtml);
+
+        // 5. Load Included/Excluded Lists
+        let includedHtml = data.included
+          .map((item) => `<li><i class="fas fa-check-circle"></i> ${item}</li>`)
+          .join("");
+        let excludedHtml = data.excluded
+          .map((item) => `<li><i class="fas fa-times-circle"></i> ${item}</li>`)
+          .join("");
+
+        $("#includedList").html(includedHtml);
+        $("#excludedList").html(excludedHtml);
+
+        // 6. Load Related Packages (Simple placeholder logic)
+        const relatedIds = Object.keys(packageData)
+          .filter((id) => id !== packageId)
+          .slice(0, 3);
+
+        let relatedHtml = relatedIds
+          .map((id) => {
+            const p = packageData[id];
+            const durationMatch = p.tagline.match(/(\d+)\s+day/i);
+            const days = durationMatch ? durationMatch[1] : "?";
+
+            return `
+                      <div class="col">
+                          <a href="package_details.html?id=${id}" class="text-decoration-none text-dark">
+                              <div class="card related-package-card shadow-sm">
+                                  <img src="https://picsum.photos/seed/related-${id}/400/180" class="card-img-top" alt="${p.title}">
+                                  <div class="card-body">
+                                      <h5 class="card-title fw-bold text-primary-custom">${p.title}</h5>
+                                      <p class="card-text small text-muted mb-1"><i class="fas fa-calendar-alt me-1"></i> ${days} Days</p>
+                                      <p class="card-text fw-bold">${p.price}</p>
+                                  </div>
+                              </div>
+                          </a>
+                      </div>`;
+          })
+          .join("");
+
+        $("#relatedPackagesList").html(
+          relatedHtml ||
+            '<div class="col-12"><p class="text-center text-muted">No related packages found.</p></div>'
+        );
+      }
+
+      $(document).ready(function () {
+        // --- GLOBAL JAVASCRIPT ---
+        var navbar = $("#mainNav");
+        var scrollThreshold = 100;
+
+        $(window).scroll(function () {
+          if ($(document).scrollTop() > scrollThreshold) {
+            navbar
+              .removeClass("navbar-transparent")
+              .addClass("navbar-scrolled");
+          } else {
+            navbar
+              .removeClass("navbar-scrolled")
+              .addClass("navbar-transparent");
+          }
+        });
+        $(window).scroll();
+
+        $('a[href^="#"]').on("click", function (event) {
+          if (this.hash !== "") {
+            event.preventDefault();
+            var hash = this.hash;
+            var targetElement = $(hash);
+
+            if (targetElement.length) {
+              var navbarHeight = navbar.hasClass("navbar-scrolled") ? 70 : 0;
+              var scrollTopPosition = targetElement.offset().top - navbarHeight;
+
+              $("html, body").animate(
+                {
+                  scrollTop: scrollTopPosition,
+                },
+                800
+              );
+            }
+          }
+        });
+        // --- END GLOBAL JAVASCRIPT ---
+
+        // --- PACKAGE DETAILS PAGE LOGIC ---
+
+        const packageId = getUrlParameter("id") || "venice";
+
+        loadPackageDetails(packageId);
+
+        $("#inquiryForm").on("submit", function (e) {
+          let isValid = true;
+          const form = $(this);
+
+          // Simple front-end validation
+          form.find("input[required], select[required]").each(function () {
+            if (!$(this).val()) {
+              $(this).addClass("is-invalid");
+              isValid = false;
+            } else {
+              $(this).removeClass("is-invalid");
+            }
+          });
+
+          if (!isValid) {
+            e.preventDefault(); // Stop submission if fields are invalid
+            alert("Please fill out all required fields.");
+          }
+          // If isValid is true, e.preventDefault() is NOT called, and the form submits to package-details.php
+        });
+      });
+    </script>
+  </body>
+</html>

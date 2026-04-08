@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wanderlust Adventures - Blog</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMDJdZ0UuP+t6wJvBwFf1A0uXpGIfG5vYlqXmS4zXWd8+oK5tU+T1g+N7g+Gg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <style>
+      /* Color Palette from user image */
+      :root {
+        --color-deep-navy: #021024;
+        --color-dark-blue: #052659; /* Primary Color */
+        --color-medium-blue: #5483b3;
+        --color-light-slate: #7da0ca;
+        --color-sky-blue: #c1e8ff; /* Light Accent */
+        --color-background-blue: #e0f0f8;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        scroll-behavior: smooth;
+        padding-top: 0;
+        background-color: var(--color-background-blue);
+      }
+
+      /* Custom utility classes based on the new palette */
+      .bg-primary-custom {
+        background-color: var(--color-dark-blue) !important;
+      }
+
+      .btn-primary-custom {
+        background-color: var(--color-dark-blue);
+        border-color: var(--color-dark-blue);
+        color: white;
+        transition: all 0.3s;
+      }
+
+      .btn-primary-custom:hover {
+        background-color: var(--color-medium-blue);
+        border-color: var(--color-medium-blue);
+      }
+
+      .text-primary-custom {
+        color: var(--color-dark-blue) !important;
+      }
+
+      /* --- START GLOBAL NAVBAR STYLES (Copy to all pages) --- */
+      .navbar {
+        transition: background-color 0.3s ease;
+      }
+      .navbar-transparent {
+        background-color: transparent !important;
+        box-shadow: none !important;
+      }
+      .navbar-transparent .nav-link {
+        color: rgba(255, 255, 255, 0.8) !important;
+      }
+      .navbar-transparent .nav-link:hover {
+        color: var(--color-sky-blue) !important;
+      }
+      .navbar-transparent .nav-link.active {
+        color: var(--color-sky-blue) !important;
+        border-bottom: 2px solid var(--color-sky-blue);
+      }
+      .navbar-scrolled {
+        background-color: var(--color-dark-blue) !important;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+      }
+      .navbar-brand img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .navbar-brand img {
+        height: 90px;
+        width: auto;
+      }
+
+      @media (max-width: 768px) {
+        .navbar-brand img {
+          height: 50px;
+        }
+      }
+      /* --- END GLOBAL NAVBAR STYLES (Copy to all pages) --- */
+
+      /* --- START GLOBAL HERO BANNER STYLES (Copy to all pages) --- */
+      #page-hero {
+        position: relative;
+        height: 55vh;
+        min-height: 300px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+        margin-bottom: 50px;
+      }
+
+      #page-hero img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -2;
+      }
+
+      #page-hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(2, 16, 36, 0.5);
+        z-index: -1;
+      }
+
+      .hero-banner-title {
+        font-size: 4.5rem;
+        font-weight: 700;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        z-index: 1;
+      }
+
+      /* Banner Responsiveness */
+      @media (max-width: 768px) {
+        #page-hero {
+          height: 40vh;
+        }
+        .hero-banner-title {
+          font-size: 2.5rem;
+          letter-spacing: 3px;
+        }
+      }
+      /* --- END GLOBAL HERO BANNER STYLES (Copy to all pages) --- */
+
+      /* --- START BLOG PAGE SPECIFIC STYLES --- */
+
+      .blog-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        overflow: hidden;
+        height: 100%;
+      }
+
+      .blog-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .blog-card a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .blog-card-img {
+        height: 250px;
+        object-fit: cover;
+      }
+
+      .category-filter-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .category-filter-list li a {
+        display: block;
+        padding: 10px 15px;
+        margin-bottom: 5px;
+        background-color: white;
+        border-radius: 8px;
+        color: var(--color-deep-navy);
+        text-decoration: none;
+        transition: background-color 0.2s, color 0.2s;
+        font-weight: 500;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      }
+
+      .category-filter-list li a:hover,
+      .category-filter-list li a.active {
+        background-color: var(--color-dark-blue);
+        color: white;
+        box-shadow: 0 2px 5px rgba(5, 38, 89, 0.3);
+      }
+
+      .sidebar-card {
+        background-color: white;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        margin-bottom: 30px;
+      }
+
+      .pagination .page-link {
+        color: var(--color-dark-blue);
+        border-color: var(--color-light-slate);
+        transition: background-color 0.2s, color 0.2s;
+      }
+
+      .pagination .page-item.active .page-link {
+        background-color: var(--color-dark-blue);
+        border-color: var(--color-dark-blue);
+        color: white;
+      }
+
+      .blog-meta-info {
+        font-size: 0.8rem;
+        color: #6c757d;
+      }
+
+      /* --- END BLOG PAGE SPECIFIC STYLES --- */
+
+      /* --- START GLOBAL FOOTER STYLES (Copy to all pages) --- */
+      .footer-bg {
+        background-color: var(--color-deep-navy) !important;
+      }
+      footer a {
+        color: var(--color-light-slate);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      footer a:hover {
+        color: var(--color-sky-blue);
+      }
+
+      /* AUTH UI STYLES */
+      .profile-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(
+          --color-light-slate
+        ); /* Light circle background */
+        color: var(--color-deep-navy); /* Dark text color */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        border: 2px solid white;
+      }
+      .profile-avatar:hover {
+        background-color: var(--color-sky-blue);
+      }
+      /* --- END GLOBAL FOOTER STYLES (Copy to all pages) --- */
+    </style>
+  </head>
+  <body>
+    <nav
+      class="navbar navbar-expand-lg fixed-top navbar-dark navbar-transparent"
+      id="mainNav"
+    >
+      <div class="container">
+        <a class="navbar-brand" href="index.html"
+          ><img src="assets/logo.png" alt="Exploreo Logo"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="destinations.html">Destinations</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="packages.html">Packages</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="blog.html">Blog</a>
+            </li>
+          </ul>
+          <!-- NOTE: Ensure 'Book Now' button is included here if needed, or moved elsewhere -->
+          <a
+            href="packages.html"
+            class="btn btn-light ms-lg-3 d-none d-lg-block"
+            >Book Now</a
+          >
+
+          <!-- START AUTH/PROFILE UI -->
+          <div class="d-flex align-items-center ms-lg-3 gap-2">
+            <!-- 1. SIGN IN / SIGN UP BUTTON (Default: Visible) -->
+            <div id="authButtons" style="display: block">
+              <a href="login-signup.php" class="btn btn-light">Sign In / Up</a>
+            </div>
+
+            <!-- 2. PROFILE AVATAR (Default: Hidden. JS controls visibility) -->
+            <div
+              id="userProfile"
+              class="profile-avatar"
+              title="View Profile / Logout"
+              onclick="handleLogout()"
+              style="display: none"
+            >
+              <span id="userInitial">U</span>
+            </div>
+          </div>
+          <!-- END AUTH/PROFILE UI -->
+        </div>
+      </div>
+    </nav>
+
+    <header id="page-hero">
+      <img
+        src="https://picsum.photos/seed/blog-page-hero/1920/800"
+        alt="Person reading map on mountain"
+      />
+      <h1 class="hero-banner-title">TRAVEL BLOG</h1>
+    </header>
+    <main class="py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <h2 class="text-deep-navy mb-4 fw-bold">Latest Articles</h2>
+
+            <div id="blogList" class="row g-4">
+              <div class="col-md-6 blog-item" data-category="city">
+                <a href="blog_details.html?id=1" class="text-decoration-none">
+                  <div class="card blog-card">
+                    <img
+                      src="https://picsum.photos/seed/blog1/400/250"
+                      class="card-img-top blog-card-img"
+                      alt="Cityscape night view"
+                    />
+                    <div class="card-body">
+                      <span class="badge bg-primary-custom mb-2"
+                        >City Breaks</span
+                      >
+                      <h5 class="card-title fw-bold text-deep-navy">
+                        The Ultimate 48-Hour Guide to Paris
+                      </h5>
+                      <p class="blog-meta-info">
+                        <i class="fas fa-calendar-alt"></i> May 1, 2025 |
+                        <i class="fas fa-user"></i> Jane Doe
+                      </p>
+                      <p class="card-text small text-muted">
+                        Discover the essential sights and local hidden gems for
+                        a perfect weekend in the City of Light...
+                      </p>
+                    </div>
+                  </div>
+                </a>
+              </div>
+
+              <div class="col-md-6 blog-item" data-category="nature">
+                <a href="blog_details.html?id=2" class="text-decoration-none">
+                  <div class="card blog-card">
+                    <img
+                      src="https://picsum.photos/seed/blog2/400/250"
+                      class="card-img-top blog-card-img"
+                      alt="Mountain hiking trail"
+                    />
+                    <div class="card-body">
+                      <span class="badge bg-danger mb-2">Nature & Hiking</span>
+                      <h5 class="card-title fw-bold text-deep-navy">
+                        Trekking the Dolomites: A Beginner's Guide
+                      </h5>
+                      <p class="blog-meta-info">
+                        <i class="fas fa-calendar-alt"></i> April 20, 2025 |
+                        <i class="fas fa-user"></i> Alex Smith
+                      </p>
+                      <p class="card-text small text-muted">
+                        Everything you need to know before tackling the stunning
+                        trails and vias ferratas of Northern Italy...
+                      </p>
+                    </div>
+                  </div>
+                </a>
+              </div>
+
+              <div class="col-md-6 blog-item" data-category="food">
+                <a href="blog_details.html?id=3" class="text-decoration-none">
+                  <div class="card blog-card">
+                    <img
+                      src="https://picsum.photos/seed/blog3/400/250"
+                      class="card-img-top blog-card-img"
+                      alt="Delicious street food"
+                    />
+                    <div class="card-body">
+                      <span class="badge bg-success mb-2">Food & Culture</span>
+                      <h5 class="card-title fw-bold text-deep-navy">
+                        Street Food Tour of Bangkok: Best Eats
+                      </h5>
+                      <p class="blog-meta-info">
+                        <i class="fas fa-calendar-alt"></i> March 15, 2025 |
+                        <i class="fas fa-user"></i> Maria K.
+                      </p>
+                      <p class="card-text small text-muted">
+                        From Pad Thai to Mango Sticky Rice, we break down the
+                        must-try dishes and markets in Thailand's capital...
+                      </p>
+                    </div>
+                  </div>
+                </a>
+              </div>
+
+              <div class="col-md-6 blog-item" data-category="city">
+                <a href="blog_details.html?id=4" class="text-decoration-none">
+                  <div class="card blog-card">
+                    <img
+                      src="https://picsum.photos/seed/blog4/400/250"
+                      class="card-img-top blog-card-img"
+                      alt="London Big Ben"
+                    />
+                    <div class="card-body">
+                      <span class="badge bg-primary-custom mb-2"
+                        >City Breaks</span
+                      >
+                      <h5 class="card-title fw-bold text-deep-navy">
+                        A Local's Guide to Hidden London Pubs
+                      </h5>
+                      <p class="blog-meta-info">
+                        <i class="fas fa-calendar-alt"></i> March 1, 2025 |
+                        <i class="fas fa-user"></i> David L.
+                      </p>
+                      <p class="card-text small text-muted">
+                        Go beyond the tourist traps and discover where true
+                        Londoners enjoy their pint...
+                      </p>
+                    </div>
+                  </div>
+                </a>
+              </div>
+
+              <div class="col-md-6 blog-item" data-category="nature">
+                <a href="blog_details.html?id=5" class="text-decoration-none">
+                  <div class="card blog-card">
+                    <img
+                      src="https://picsum.photos/seed/blog5/400/250"
+                      class="card-img-top blog-card-img"
+                      alt="Iceland Northern Lights"
+                    />
+                    <div class="card-body">
+                      <span class="badge bg-danger mb-2">Nature & Hiking</span>
+                      <h5 class="card-title fw-bold text-deep-navy">
+                        Chasing the Aurora: Iceland in Winter
+                      </h5>
+                      <p class="blog-meta-info">
+                        <i class="fas fa-calendar-alt"></i> Feb 10, 2025 |
+                        <i class="fas fa-user"></i> Sara W.
+                      </p>
+                      <p class="card-text small text-muted">
+                        Tips and best spots for witnessing the Northern Lights
+                        spectacle...
+                      </p>
+                    </div>
+                  </div>
+                </a>
+              </div>
+
+              <div class="col-md-6 blog-item" data-category="food">
+                <a href="blog_details.html?id=6" class="text-decoration-none">
+                  <div class="card blog-card">
+                    <img
+                      src="https://picsum.photos/seed/blog6/400/250"
+                      class="card-img-top blog-card-img"
+                      alt="Italy pasta"
+                    />
+                    <div class="card-body">
+                      <span class="badge bg-success mb-2">Food & Culture</span>
+                      <h5 class="card-title fw-bold text-deep-navy">
+                        Mastering Pasta Making in Bologna
+                      </h5>
+                      <p class="blog-meta-info">
+                        <i class="fas fa-calendar-alt"></i> Jan 5, 2025 |
+                        <i class="fas fa-user"></i> Chef Remo
+                      </p>
+                      <p class="card-text small text-muted">
+                        A hands-on guide to traditional pasta making from the
+                        culinary heart of Italy...
+                      </p>
+                    </div>
+                  </div>
+                </a>
+              </div>
+
+              <div class="col-12 text-center my-5 d-none" id="noResults">
+                <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+                <h4 class="text-muted">No posts match this category.</h4>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-center mt-5">
+              <nav>
+                <ul class="pagination shadow-sm">
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#">Previous</a>
+                  </li>
+                  <li class="page-item active">
+                    <a class="page-link" href="#">1</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="sidebar-card">
+              <h4 class="text-deep-navy fw-bold mb-3">Categories</h4>
+              <ul class="category-filter-list">
+                <li>
+                  <a href="#" data-filter="all" class="active"
+                    >All Topics (6)</a
+                  >
+                </li>
+                <li><a href="#" data-filter="city">City Breaks (2)</a></li>
+                <li>
+                  <a href="#" data-filter="nature">Nature & Hiking (2)</a>
+                </li>
+                <li><a href="#" data-filter="food">Food & Culture (2)</a></li>
+                <li><a href="#" data-filter="luxury">Luxury Travel (0)</a></li>
+                <li><a href="#" data-filter="budget">Budget Travel (0)</a></li>
+              </ul>
+            </div>
+
+            <div class="sidebar-card">
+              <h4 class="text-deep-navy fw-bold mb-3">Popular Posts</h4>
+              <ul class="list-unstyled">
+                <li class="mb-3">
+                  <a
+                    href="blog_details.html?id=1"
+                    class="text-decoration-none fw-bold text-primary-custom"
+                    >Ultimate 48-Hour Guide to Paris</a
+                  >
+                  <p class="blog-meta-info mb-0">May 1, 2025</p>
+                </li>
+                <li class="mb-3">
+                  <a
+                    href="blog_details.html?id=2"
+                    class="text-decoration-none fw-bold text-primary-custom"
+                    >Trekking the Dolomites</a
+                  >
+                  <p class="blog-meta-info mb-0">April 20, 2025</p>
+                </li>
+                <li class="mb-0">
+                  <a
+                    href="blog_details.html?id=5"
+                    class="text-decoration-none fw-bold text-primary-custom"
+                    >Chasing the Aurora: Iceland</a
+                  >
+                  <p class="blog-meta-info mb-0">Feb 10, 2025</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="text-white pt-5 pb-4 mt-5 footer-bg">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-4 col-md-6">
+            <h5 class="text-white mb-3 fw-bold footer-heading">
+              <i class="fas fa-globe me-2"></i>Wanderlust Adventures
+            </h5>
+            <p class="small text-white-50">
+              Explore the world with tailored itineraries and exceptional
+              service. Your journey begins here.
+            </p>
+            <p class="mb-1 small">
+              <i class="fas fa-map-marker-alt me-2 text-white-50"></i>123 Travel
+              Road, Explorer City, Earth
+            </p>
+            <p class="mb-1 small">
+              <i class="fas fa-envelope me-2 text-white-50"></i
+              >info@wanderlust.com
+            </p>
+          </div>
+
+          <div class="col-lg-3 col-md-6">
+            <h5 class="text-white mb-3 fw-bold footer-heading">Quick Links</h5>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a href="index.html" class="text-white-50">Home</a>
+              </li>
+              <li class="mb-2">
+                <a href="packages.html" class="text-white-50">Packages</a>
+              </li>
+              <li class="mb-2">
+                <a href="destinations.html" class="text-white-50"
+                  >Destinations</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="about.html" class="text-white-50">About Us</a>
+              </li>
+              <li class="mb-2">
+                <a href="blog.html" class="text-white-50">Blog</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg-5 col-md-12">
+            <h5 class="text-white mb-3 fw-bold footer-heading">
+              Stay Connected
+            </h5>
+            <p class="small text-white-50">Subscribe for exclusive deals.</p>
+            <form class="input-group mb-3">
+              <input
+                type="email"
+                class="form-control"
+                placeholder="Your Email"
+                aria-label="Your Email"
+              />
+              <button class="btn btn-light" type="submit">Subscribe</button>
+            </form>
+
+            <div class="mt-4">
+              <a href="#" class="text-white me-3"
+                ><i class="fab fa-facebook-f fa-lg"></i
+              ></a>
+              <a href="#" class="text-white me-3"
+                ><i class="fab fa-twitter fa-lg"></i
+              ></a>
+              <a href="#" class="text-white me-3"
+                ><i class="fab fa-instagram fa-lg"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+
+        <hr class="mt-4 mb-3 text-white-50" />
+        <div class="text-center small text-white-50">
+          © 2025 Wanderlust Adventures. All Rights Reserved.
+        </div>
+      </div>
+    </footer>
+
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      // Placeholder function to simulate user data retrieval from storage
+      function getLoggedInUser() {
+        // Reads a mock user name from localStorage set by loading.php
+        return localStorage.getItem("userName");
+      }
+
+      function updateAuthStatusUI() {
+        const userName = getLoggedInUser();
+        const $authButtons = $("#authButtons");
+        const $userProfile = $("#userProfile");
+        const $userInitial = $("#userInitial");
+
+        if (userName) {
+          // User is logged in: SHOW Avatar, HIDE Buttons
+          $authButtons.css("display", "none");
+          $userProfile.css("display", "flex");
+          $userInitial.text(userName.charAt(0).toUpperCase());
+        } else {
+          // User is NOT logged in: HIDE Avatar, SHOW Buttons
+          $userProfile.css("display", "none");
+          $authButtons.css("display", "block");
+        }
+      }
+
+      function handleLogout() {
+        // Clears the logged-in state, alerts user, and reloads the page
+        localStorage.removeItem("userName");
+        alert("You have been logged out. Redirecting to home.");
+        window.location.reload();
+      }
+
+      // Expose handleLogout globally for the HTML onclick attribute
+      window.handleLogout = handleLogout;
+
+      // -----------------------------------------------------
+      // IMPORTANT: You MUST call updateAuthStatusUI() inside your main ready function
+      $(document).ready(function () {
+        // Call this immediately to set the UI state correctly
+        updateAuthStatusUI();
+
+        // ... (rest of your existing code and other $(document).ready blocks)
+      });
+      $(document).ready(function () {
+        // --- START GLOBAL JAVASCRIPT (Copy this block to all pages) ---
+        var navbar = $("#mainNav");
+        var scrollThreshold = 100;
+
+        $(window).scroll(function () {
+          if ($(document).scrollTop() > scrollThreshold) {
+            navbar
+              .removeClass("navbar-transparent")
+              .addClass("navbar-scrolled");
+          } else {
+            navbar
+              .removeClass("navbar-scrolled")
+              .addClass("navbar-transparent");
+          }
+        });
+        $(window).scroll();
+
+        $('a[href^="#"]').on("click", function (event) {
+          if (this.hash !== "") {
+            event.preventDefault();
+            var hash = this.hash;
+            var targetElement = $(hash);
+
+            if (targetElement.length) {
+              var navbarHeight = navbar.hasClass("navbar-scrolled") ? 70 : 0;
+              var scrollTopPosition = targetElement.offset().top - navbarHeight;
+
+              $("html, body").animate(
+                {
+                  scrollTop: scrollTopPosition,
+                },
+                800
+              );
+            }
+          }
+        });
+        // --- END GLOBAL JAVASCRIPT (Copy to all pages) ---
+
+        // --- START BLOG PAGE LOGIC (Category Filtering) ---
+        const $blogItems = $(".blog-item");
+
+        function filterPosts(category) {
+          let resultsCount = 0;
+
+          $blogItems.each(function () {
+            const postCategory = $(this).data("category");
+            if (category === "all" || postCategory === category) {
+              $(this).show();
+              resultsCount++;
+            } else {
+              $(this).hide();
+            }
+          });
+
+          if (resultsCount === 0) {
+            $("#noResults").removeClass("d-none");
+          } else {
+            $("#noResults").addClass("d-none");
+          }
+        }
+
+        $(".category-filter-list a").on("click", function (e) {
+          e.preventDefault();
+          const selectedCategory = $(this).data("filter");
+
+          // Update active state
+          $(".category-filter-list a").removeClass("active");
+          $(this).addClass("active");
+
+          filterPosts(selectedCategory);
+        });
+
+        filterPosts("all");
+        // --- END BLOG PAGE LOGIC (Category Filtering) ---
+      });
+    </script>
+  </body>
+</html>
