@@ -29,6 +29,18 @@ pipeline {
                 '''
             }
         }
+        stage('4. Deploy Exploreo Application') {
+            steps {
+                echo 'Running Exploreo Application Container...'
+                sh '''
+                docker run -d \
+                  --name exploreo-app \
+                  --network exploreo-net \
+                  -p 80:8080 \
+                  springboot-app:1.0.0
+                '''
+            }
+        }
     }
     post {
         success {
