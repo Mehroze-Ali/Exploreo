@@ -15,6 +15,20 @@ pipeline {
                 sh 'mvn clean package -DskipTests'
             }
         }
+        stage('3. Deploy MySQL Database') {
+            steps {
+                echo 'Deploying MySQL Database Container...'
+                sh '''
+                docker run -d \
+                  --name exploreo-db \
+                  --network exploreo-net \
+                  -e MYSQL_ROOT_PASSWORD=rootpassword \
+                  -e MYSQL_DATABASE=exploreodb \
+                  -p 3306:3306 \
+                  mysql:8.0
+                '''
+            }
+        }
     }
     post {
         success {
